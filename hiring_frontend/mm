@@ -1,0 +1,147 @@
+import React, {useRef, useState} from 'react';
+import Webcam from 'react-webcam';
+import '@tensorflow/tfjs-backend-webgl';
+import '@tensorflow-models/blazeface'
+import { computeHeadingLevel } from '@testing-library/react';
+// import draw from './utilities.js';
+function CameraDeduction() {
+  const webcamRef = useRef(null);
+  const canvasRef = useRef(null);
+  const blazeface = require('@tensorflow-models/blazeface')
+  const [isAlert,setAlert]=useState(false);
+
+  const runFacedetection = async () => {
+    const model = await blazeface.load()
+    console.log("FaceDetection Model is Loaded..") 
+    setInterval(() => {
+      detect(model);
+    }, 5000);
+
+}
+const returnTensors = false;
+
+  const detect = async (model) => {
+      if(
+          typeof webcamRef.current !== "undefined" &&
+          webcamRef.current !== null &&
+          webcamRef.current.video.readyState === 4
+        )
+        
+        {
+          // Get video properties
+          const video = webcamRef.current.video;
+          console.log(video,"hello")
+         
+          const videoWidth = 1200;
+          console.log(videoWidth.length,"videowight")
+          const videoHeight = 1000;
+          console.log(videoHeight,"videoheight")
+          //Set video height and width
+          webcamRef.current.video.width = videoWidth;
+          webcamRef.current.video.height = videoHeight;
+     
+          //Set canvas height and width
+            canvasRef.current.width = videoWidth;
+            console.log(videoHeight,"video");
+            canvasRef.current.height = videoHeight;
+
+          // Make detections
+
+          const prediction = await model.estimateFaces(video, returnTensors);
+           console.log(prediction,"ppp");
+           console.log(prediction.length,"prediction",prediction);
+          if(prediction.length===0 ) 
+          {
+            setAlert(true,"Face is not Detected")
+            alert("Face is not Deducted")
+          }
+
+          else if(prediction.length>1)
+          {
+            alert("Malpractice Activity will be Deducted")
+          }
+          else{
+            const[face]=prediction;
+            const tolerance=10;
+            console.log( face.landmarks[0][1] < videoHeight / 2,"face")
+            // console.log(face.landmarks[1][0],"face1,0")
+            // console.log(face.landmarks[1][0],'lll')
+            // console.log(videoHeight,"videoHeight");
+            // console.log(videoWidth,"vidoewidth");
+
+            // //check
+            // if(face.landmarks[0][1] > videoHeight/2 - tolerance || 
+            //    face.landmarks[1][0] > videoWidth/2 +tolerance || 
+            //    face.landmarks[1][0] > videoWidth/2 - tolerance)
+            // {
+              if (
+                face.landmarks[0][1] < videoHeight / 2 && // Check if the face is in the top half of the frame
+                face.landmarks[1][0] > videoWidth / 4 &&  // Check if the face is at least 1/4th from the left edge
+                face.landmarks[1][0] <  videoWidth / 4 && // Check if the face is within 3/4ths from the left edge
+                face.landmarks[0][1] < videoHeight /2
+              )
+               {
+                setAlert(null);
+              }
+              // {
+              //   alert("Face is in the desired position");
+              // } 
+              else
+               {
+                alert("Face is not in the desired position");
+              }
+              
+            
+          }
+        //   const ctx = canvasRef.current.getContext("2d");
+        //   draw(prediction, ctx)
+        //  console.log(ctx);
+        }
+
+      }
+
+     runFacedetection();
+   return (
+     <div className="App">
+       <header className="App-header">
+         <Webcam
+        //  ref={webcamRef}
+        //   style={{
+        //     position: "absolute",
+        //     marginLeft: "auto",
+        //     marginRight: "auto",
+        //     top:100,
+        //     left:0,
+        //     right:80,
+        //     textAlign: "center",
+        //     zIndex:9,
+        //     width:640,
+        //     height:480,
+        //  }}
+          />
+ 
+         <canvas
+          ref={canvasRef}
+        //   style={{
+        //    position: "absolute",
+        //    marginLeft: "auto",
+        //    marginRight: "auto",
+        //    top:100,
+        //    left:0,
+        //    right:80,
+        //    textAlign: "center",
+        //    zIndex:9,
+        //    width:640,
+        //    height:480,
+        // }}
+         />
+         
+
+          
+           
+       </header>
+     </div>
+   );
+ 
+}
+export default CameraDeduction;

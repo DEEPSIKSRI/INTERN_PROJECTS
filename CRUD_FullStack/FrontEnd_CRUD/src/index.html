@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+    <style>
+        #alertMessage {
+            display: none;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: red;
+            color: white;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <video id="userCamera" autoplay></video>
+    <div id="alertMessage">You are away from the camera</div>
+
+    <script>
+        async function loadFaceDetectionModel() {
+            await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
+            await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
+        }
+
+        async function detectFace() {
+            const video = document.getElementById('userCamera');
+            const canvas = faceapi.createCanvasFromMedia(video);
+            const displaySize = { width: video.width, height: video.height };
+            faceapi.matchDimensions(canvas, displaySize);
+            document.body.append(canvas);
+
+            const alertMessage = document.getElementById('alertMessage');
+            const model = await loadFaceDetectionModel();
+
+            // Variable to track user presence
+            let userPresent = true;
+
+            async function detect() {
+                const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();
+
+                // Adjust the threshold as needed
+                if (detections.length === 0) {
+                    if (userPresent) {
+                        alertMessage.style.display = 'block';
+                    }
+                    userPresent = false;
+                } else {
+                    if (!userPresent) {
+                        alertMessage.style.display = 'none';
+                    }
+                    userPresent = true;
+                }
+            }
+
+            video.addEventListener('play', () => {
+                setInterval(detect, 1000); // Adjust the interval as needed
+            });
+        }
+
+        async function setupCamera() {
+            const video = document.getElementById('userCamera');
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+        }
+
+        setupCamera().then(detectFace);
+    </script>
+</body>
+</html>

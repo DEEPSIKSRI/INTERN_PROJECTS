@@ -1,0 +1,136 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Microphone Activity Alert Display</title>
+</head>
+<body>
+    <button id="alertButton">Show Alert</button>
+    <script>
+        // Global variables
+        let isSpeaking = false; // Flag to track speech activity
+        let alertButton = document.getElementById("alertButton");
+
+        const audioContext = new AudioContext();
+
+        // Create a microphone audio source
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(function (stream) {
+                const microphone = audioContext.createMediaStreamSource(stream);
+
+                // Create a script processor node to analyze audio
+                const scriptNode = audioContext.createScriptProcessor(2048, 1, 1);
+
+                // Connect the microphone input to the scriptNode
+                microphone.connect(scriptNode);
+
+                // Connect the scriptNode to the audio context's destination
+                scriptNode.connect(audioContext.destination);
+
+                scriptNode.onaudioprocess = function (event) {
+                    const inputBuffer = event.inputBuffer;
+                    const inputData = inputBuffer.getChannelData(0);
+
+                    // Calculate the average audio level
+                    const audioLevel = inputData.reduce((sum, sample) => sum + Math.abs(sample), 0) / inputData.length;
+
+                    // Adjust this threshold based on your needs
+                    const speechActivityThreshold = 0.1;
+
+                    // Update the speaking flag
+                    isSpeaking = audioLevel > speechActivityThreshold;
+
+                    // Update the alert button state
+                    updateAlertButtonState();
+                };
+            })
+            .catch(function (error) {
+                console.error("Error accessing the microphone: " + error);
+            });
+
+        // Function to update the alert button state
+        function updateAlertButtonState() {
+            if (isSpeaking) {
+                // If speaking, enable the alert button
+                alertButton.disabled = false;
+            } else {
+                // If not speaking, disable the alert button
+                alertButton.disabled = true;
+            }
+        }
+
+        // Event handler for the alert button
+        alertButton.addEventListener("click", function () {
+            alert("Alert Message!");
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Microphone Activity Alert Display</title>
+</head>
+<body>
+    <button id="alertButton">Show Alert</button>
+    <script>
+        // Global variables
+        let isSpeaking = false; // Flag to track speech activity
+        let alertButton = document.getElementById("alertButton");
+
+        const audioContext = new AudioContext();
+
+        // Create a microphone audio source
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(function (stream) {
+                const microphone = audioContext.createMediaStreamSource(stream);
+
+                // Create a script processor node to analyze audio
+                const scriptNode = audioContext.createScriptProcessor(2048, 1, 1);
+
+                // Connect the microphone input to the scriptNode
+                microphone.connect(scriptNode);
+
+                // Connect the scriptNode to the audio context's destination
+                scriptNode.connect(audioContext.destination);
+
+                scriptNode.onaudioprocess = function (event) {
+                    const inputBuffer = event.inputBuffer;
+                    const inputData = inputBuffer.getChannelData(0);
+
+                    // Calculate the average audio level
+                    const audioLevel = inputData.reduce((sum, sample) => sum + Math.abs(sample), 0) / inputData.length;
+
+                    // Adjust this threshold based on your needs
+                    const speechActivityThreshold = 0.1;
+
+                    // Update the speaking flag
+                    isSpeaking = audioLevel > speechActivityThreshold;
+
+                    // Update the alert button state
+                    updateAlertButtonState();
+                };
+            })
+            .catch(function (error) {
+                console.error("Error accessing the microphone: " + error);
+            });
+
+        // Function to update the alert button state
+        function updateAlertButtonState() {
+            if (isSpeaking) {
+                // If speaking, enable the alert button
+                alertButton.disabled = false;
+            } else {
+                // If not speaking, disable the alert button
+                alertButton.disabled = true;
+            }
+        }
+
+        // Event handler for the alert button
+        alertButton.addEventListener("click", function () {
+            alert("Alert Message!");
+        });
+    </script>
+</body>
+</html> -->

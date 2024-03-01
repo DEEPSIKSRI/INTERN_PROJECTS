@@ -1,0 +1,102 @@
+.App{
+  font-family: Arial, sans-serif;
+  background-image: url('https://divum.in/images/11-07-2022/How-can-I-become-a-republic-of-Divum%20600%20x%20600.jpg');
+  background-size:cover;
+  padding: 0px; 
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  background-color: grey;
+  border: 1px solid black;
+  padding-left: 90px; 
+}
+
+#logo1 {
+  height: 150px;
+  width: 150px;
+  padding-top: 10px;
+  padding-left: 350px;
+}
+
+.table-body{
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 80%;
+  margin: auto; 
+  border: solid  grey; 
+  border-radius: 10;
+  padding-top: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 0px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#box th
+{
+  padding: 10px;
+  border: 2px solid grey;
+  text-align: left;
+  font-size: 20px;
+  color: white;
+  background-color: gray;
+}
+#box td
+{
+  padding: 10px;
+  border: 2px solid gray;
+  text-align: left;
+  font-size: 14px;
+  color:black;
+  background-color: white;
+}
+
+
+
+
+title {
+  background-color: black;
+  color: white; 
+}
+
+.btnn {
+  padding-top: 80px;
+  padding-right: 350px;
+}
+
+#button {
+  background-color:grey;
+  color:white;
+  /* padding-bottom:  10px; */
+  font-size: 20px;
+  /* margin-left: 300px;  */
+  
+}
+#back-back
+{
+  background-color:grey;
+  color:white;
+  /* padding-bottom:  10px;
+  font-size: 16px;
+  margin-left: 300px;  */
+  
+}
+#actions {
+  background-color: grey;
+  color:black;
+  padding: 10px;
+  font-size: 15px;
+  margin: 6px;
+  cursor: pointer;
+  text-align: center;
+
+}
+
+#actions:hover {
+  background-color:grey; 
+}

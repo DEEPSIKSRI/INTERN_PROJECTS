@@ -1,0 +1,110 @@
+body, h1, h2, p {
+  margin: 0;
+  padding: 0;
+
+  font-family: Arial, sans-serif;
+}
+
+.top {
+  /* background-color: white; */
+  display: flex;
+  justify-content: center;
+}
+
+#img {
+  height: 100px;
+  width: 100px;
+  padding-top: 10px;
+}
+.front-view {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  height: 100vh;
+  /* background-color: white; */
+  /* background-repeat: no-repeat; */
+}
+.head {
+  text-align: center;
+  color: black;
+}
+
+.body {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+label {
+  font-weight: bold;
+  text-align: left;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 50px;
+  padding-left: 20px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.buttons{
+  display: flex;
+  justify-content: space-between;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+.whole
+{
+  background-position: center center;
+  background-image: url('https://divum.in/images/11-07-2022/How-can-I-become-a-republic-of-Divum%20600%20x%20600.jpg');
+  background-size: cover;
+}
+.back{
+  padding-right:80px;
+}
+
+.btn{
+  padding-left: 80px;
+}
+.error
+{
+  color: red;
+  
+}
+.input.success input{
+  border-color: green;
+}
+.input.success textarea
+{
+  color: green;
+}
+.input.error textarea
+{
+  color: red;
+}
