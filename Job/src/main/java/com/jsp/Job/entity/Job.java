@@ -16,7 +16,7 @@ import java.util.Date;
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long jobId;
 
-        private Long companyId;
+        private Integer companyId;
 
         private String category;
 

@@ -13,4 +13,16 @@ public interface CompanyService {
    ResponseEntity< ResponseDTO > listOfCompanies ( );
 
    ResponseEntity< ResponseDTO> addCompany ( CompanyDTO companyDTO );
+
+    ResponseEntity< ResponseDTO> updateCompany ( CompanyDTO companyDTO );
+
+    ResponseEntity< ResponseDTO> getParticularCompany ( Integer companyId );
+
+    ResponseEntity< ResponseDTO> deleteCompany ( Integer companyId );
+
+    ResponseEntity< ResponseDTO> deleteAllCompany ( );
+
+    ResponseEntity< ResponseDTO> listOfCompaniesName ( );
+
+    ResponseEntity< ResponseDTO> searchByName ( String companyName );
 }

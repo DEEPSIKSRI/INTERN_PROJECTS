@@ -16,7 +16,7 @@ public class JobRegistration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long registrationId;
 
-    private Long companyId;
+    private Integer companyId;
 
     private Long jobId;
 

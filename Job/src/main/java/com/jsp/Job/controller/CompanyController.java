@@ -16,6 +16,12 @@ import java.util.List;
 public class CompanyController implements CompanyApi {
 
     private final CompanyService companyService;
+
+    @Override
+    public ResponseEntity < ResponseDTO > particularCompany ( Integer companyId ) {
+        return companyService.getParticularCompany(companyId);
+    }
+
     @Override
     public ResponseEntity< ResponseDTO> getAllCompany ( ) {
         return companyService.listOfCompanies();
@@ -24,5 +30,30 @@ public class CompanyController implements CompanyApi {
     @Override
     public ResponseEntity < ResponseDTO > addCompany ( CompanyDTO companyDTO ) {
         return companyService.addCompany(companyDTO);
+    }
+
+    @Override
+    public ResponseEntity < ResponseDTO > updateCompany ( CompanyDTO companyDTO ) {
+        return companyService.updateCompany(companyDTO);
+    }
+
+    @Override
+    public ResponseEntity < ResponseDTO > deleteCompany ( Integer companyId ) {
+        return companyService.deleteCompany(companyId);
+    }
+
+    @Override
+    public ResponseEntity < ResponseDTO > deleteAllCompany ( ) {
+        return companyService.deleteAllCompany();
+    }
+
+    @Override
+    public ResponseEntity < ResponseDTO > listOfCompanyName ( ) {
+        return companyService.listOfCompaniesName();
+    }
+
+    @Override
+    public ResponseEntity < ResponseDTO > searchByCompanyName ( String companyName ) {
+        return companyService.searchByName(companyName);
     }
 }
