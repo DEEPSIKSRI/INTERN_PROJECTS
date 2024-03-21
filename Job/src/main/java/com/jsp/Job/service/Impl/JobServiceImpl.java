@@ -164,6 +164,11 @@ public class JobServiceImpl implements JobService {
 
     }
 
+    @Override
+    public ResponseEntity < ResponseDTO > listOfJobByTittle ( ) {
+        List<String> list=jobServiceRepo.findAllByOccupationTitle (  );
+        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"List of OccupationTitle",list ) );
+    }
 
 
 }

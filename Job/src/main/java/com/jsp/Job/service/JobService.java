@@ -24,5 +24,5 @@ public interface JobService {
     ResponseEntity< ResponseDTO> searchByNameAndTitle ( JobVacancyDTO jobVacancyDTO );
 
 
-
+    ResponseEntity< ResponseDTO> listOfJobByTittle ( );
 }

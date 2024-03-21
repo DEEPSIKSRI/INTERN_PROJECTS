@@ -58,4 +58,11 @@ public class JobRepoServiceImpl implements JobServiceRepo {
     public List < Job > findByCompanyIdAndOccupationTitle ( Integer companyId , String occupationTitle ) {
         return jobRepository.findByCompanyIdAndOccupationTitle ( companyId, occupationTitle );
     }
+
+    @Override
+    public List < String > findAllByOccupationTitle ( ) {
+        return jobRepository.findAllByOccupationTitle ();
+    }
+
+
 }

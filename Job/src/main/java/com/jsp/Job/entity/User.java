@@ -1,16 +1,15 @@
 package com.jsp.Job.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "User_Table")
+@Table(name = "UserJob")
 public class User {
 
     @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userId;
 
     private String fullName;
@@ -22,6 +21,8 @@ public class User {
     private String role;
 
     private String picLocation;
+
+    private String token;
 
 
 }

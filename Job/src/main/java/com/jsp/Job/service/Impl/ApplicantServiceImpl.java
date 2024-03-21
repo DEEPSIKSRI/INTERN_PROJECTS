@@ -29,6 +29,7 @@ public class ApplicantServiceImpl implements ApplicantService {
     private final JobRegistrationServiceRepo jobRegistrationServiceRepo;
     private final JobServiceRepo jobServiceRepo;
     private final CompanyServiceRep companyServiceRep;
+    private final CompanyServiceImpl companyService;
 
     @Override
     public ResponseEntity < ResponseDTO > applyJob ( JobApplyDTO jobApplyDTO ) {
@@ -229,6 +230,11 @@ public class ApplicantServiceImpl implements ApplicantService {
             break;
         }
         return ResponseEntity.ok ( ).body ( new ResponseDTO ( true , HttpStatus.OK , "Messages Delivered successfully" , htmlContent ) );
+    }
+
+    @Override
+    public ResponseEntity < ResponseDTO > fetchAll ( ) {
+        return companyService.listOfCompanies ();
     }
 
 

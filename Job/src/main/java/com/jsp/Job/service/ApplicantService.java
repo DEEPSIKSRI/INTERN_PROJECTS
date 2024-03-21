@@ -21,4 +21,6 @@ public interface ApplicantService {
     ResponseEntity< ResponseDTO> appliedJobs (Long applicantId );
 
     ResponseEntity< ResponseDTO> sendHtmlContent ( Long applicantId );
+
+    ResponseEntity< ResponseDTO> fetchAll ( );
 }

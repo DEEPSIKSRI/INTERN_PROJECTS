@@ -32,6 +32,11 @@ public class JobController implements JobApi {
     }
 
     @Override
+    public ResponseEntity < ResponseDTO > listOfJobByTittle ( ) {
+        return jobService.listOfJobByTittle();
+    }
+
+    @Override
     public ResponseEntity < ResponseDTO > particularCompany ( String companyName ) {
         return jobService.particularCompany(companyName);
     }

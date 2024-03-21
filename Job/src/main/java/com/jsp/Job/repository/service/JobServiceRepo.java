@@ -5,7 +5,8 @@ import com.jsp.Job.entity.Job;
 import java.util.List;
 import java.util.Optional;
 
-public interface JobServiceRepo {
+public interface
+JobServiceRepo {
     Optional < Job > findById ( Long jobId );
 
     Job save ( Job job );
@@ -20,5 +21,7 @@ public interface JobServiceRepo {
     List<Job> findByCategory( String category );
 
     List<Job> findByCompanyIdAndOccupationTitle( Integer companyId , String occupationTitle ) ;
+
+    List<String> findAllByOccupationTitle();
 
 }

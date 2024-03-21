@@ -45,4 +45,9 @@ public class ApplicantController implements ApplicantApi {
     public ResponseEntity < ResponseDTO > sendContent ( Long applicantId ) {
         return applicantService.sendHtmlContent(applicantId);
     }
+
+    @Override
+    public ResponseEntity < ResponseDTO > getAll ( ) {
+        return applicantService.fetchAll();
+    }
 }
