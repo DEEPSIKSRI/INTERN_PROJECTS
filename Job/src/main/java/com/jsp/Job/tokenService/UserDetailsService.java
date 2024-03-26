@@ -3,7 +3,6 @@ package com.jsp.Job.tokenService;
 import com.jsp.Job.entity.User;
 import com.jsp.Job.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,19 +22,19 @@ public class UserDetailsService implements org.springframework.security.core.use
 
 
     @Override
-    public UserDetails loadUserByUsername ( String username ) throws     UsernameNotFoundException {
-        User user = userRepository.findByUsername (  username );
+    public UserDetails loadUserByUsername ( String username ) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername ( username );
 
-        Set < GrantedAuthority > authorities = new HashSet <> (  );
-        authorities.add ( new SimpleGrantedAuthority ( "ROLE_" +user.getRole ()) );
+        Set < GrantedAuthority > authorities = new HashSet <> ( );
+        authorities.add ( new SimpleGrantedAuthority ( "ROLE" + user.getRole ( ) ) );
 
-        return org.springframework.security.core.userdetails.User.withUsername ( user.getUsername () )
-                .password ( user.getPassword () )
+        return org.springframework.security.core.userdetails.User.withUsername ( user.getUsername ( ) )
+                .password ( user.getPassword ( ) )
                 .authorities ( authorities )
                 .accountExpired ( true )
                 .credentialsExpired ( true )
                 .credentialsExpired ( true )
                 .disabled ( true )
-                .build ();
+                .build ( );
     }
 }

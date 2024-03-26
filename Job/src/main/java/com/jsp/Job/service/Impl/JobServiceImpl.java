@@ -1,7 +1,12 @@
 package com.jsp.Job.service.Impl;
 
-import com.jsp.Job.dto.*;
-import com.jsp.Job.entity.*;
+import com.jsp.Job.dto.JobTitleDescriptionDTO;
+import com.jsp.Job.dto.JobVacancyDTO;
+import com.jsp.Job.dto.JobVacancyDetailsDTO;
+import com.jsp.Job.dto.ResponseDTO;
+import com.jsp.Job.entity.Category;
+import com.jsp.Job.entity.Company;
+import com.jsp.Job.entity.Job;
 import com.jsp.Job.repository.ApplicantRepository;
 import com.jsp.Job.repository.service.CategoryServiceRepo;
 import com.jsp.Job.repository.service.CompanyServiceRep;
@@ -9,14 +14,12 @@ import com.jsp.Job.repository.service.JobRegistrationServiceRepo;
 import com.jsp.Job.repository.service.JobServiceRepo;
 import com.jsp.Job.service.JobService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -81,93 +84,89 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public ResponseEntity < ResponseDTO > particularCompany ( String companyName ) {
-        if(! companyServiceRep.existsCompanyByName ( companyName) )
-        {
-            return ResponseEntity.status ( HttpStatus.BAD_REQUEST ).body ( new ResponseDTO ( false,HttpStatus.BAD_REQUEST,"No Hiring in this Company!!","" ) );
+        if ( !companyServiceRep.existsCompanyByName ( companyName ) ) {
+            return ResponseEntity.status ( HttpStatus.BAD_REQUEST ).body ( new ResponseDTO ( false , HttpStatus.BAD_REQUEST , "No Hiring in this Company!!" , "" ) );
         }
-        Company company=companyServiceRep.findCompanyByName ( companyName );
-        List<Job> jobs=jobServiceRepo.findByCompanyId ( company.getCompanyId () );
-        List<JobVacancyDetailsDTO> jobVacancyDetailsDTOS=jobs.stream( ).map ( job -> {
-            JobVacancyDetailsDTO jobVacancyDetailsDTO=new JobVacancyDetailsDTO ();
-            jobVacancyDetailsDTO.setName (company.getName ()  );
-            jobVacancyDetailsDTO.setAddress ( company.getAddress () );
+        Company company = companyServiceRep.findCompanyByName ( companyName );
+        List < Job > jobs = jobServiceRepo.findByCompanyId ( company.getCompanyId ( ) );
+        List < JobVacancyDetailsDTO > jobVacancyDetailsDTOS = jobs.stream ( ).map ( job -> {
+            JobVacancyDetailsDTO jobVacancyDetailsDTO = new JobVacancyDetailsDTO ( );
+            jobVacancyDetailsDTO.setName ( company.getName ( ) );
+            jobVacancyDetailsDTO.setAddress ( company.getAddress ( ) );
             jobVacancyDetailsDTO.setOccupationTitle ( job.getOccupationTitle ( ) );
-            jobVacancyDetailsDTO.setDatePosted ( job.getDatePosted () );
+            jobVacancyDetailsDTO.setDatePosted ( job.getDatePosted ( ) );
             return jobVacancyDetailsDTO;
-        } )  .toList ( );
+        } ).toList ( );
 
-        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"Hiring process is ongoing in " + companyName + " company.",jobVacancyDetailsDTOS ) );
+        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true , HttpStatus.OK , "Hiring process is ongoing in " + companyName + " company." , jobVacancyDetailsDTOS ) );
     }
 
     @Override
     public ResponseEntity < ResponseDTO > searchCompanyByTitle ( String occupationTittle ) {
-        if(! jobServiceRepo.existsByOccupationTitle ( occupationTittle) )
-        {
-            return ResponseEntity.status ( HttpStatus.BAD_REQUEST ).body ( new ResponseDTO ( false,HttpStatus.BAD_REQUEST,"No Hiring in this OccupationTitle!!","" ) );
+        if ( !jobServiceRepo.existsByOccupationTitle ( occupationTittle ) ) {
+            return ResponseEntity.status ( HttpStatus.BAD_REQUEST ).body ( new ResponseDTO ( false , HttpStatus.BAD_REQUEST , "No Hiring in this OccupationTitle!!" , "" ) );
         }
-        List<Job> jobs=jobServiceRepo.findByOccupationTitle (occupationTittle);
-        List< JobTitleDescriptionDTO > jobTitleDescriptionDTOS=jobs.stream ().map (
+        List < Job > jobs = jobServiceRepo.findByOccupationTitle ( occupationTittle );
+        List < JobTitleDescriptionDTO > jobTitleDescriptionDTOS = jobs.stream ( ).map (
                 job -> {
-                    JobTitleDescriptionDTO jobTitleDescriptionDTO=new JobTitleDescriptionDTO ();
+                    JobTitleDescriptionDTO jobTitleDescriptionDTO = new JobTitleDescriptionDTO ( );
                     jobTitleDescriptionDTO.setOccupationTitle ( job.getOccupationTitle ( ) );
                     jobTitleDescriptionDTO.setJobDescription ( job.getJobDescription ( ) );
                     return jobTitleDescriptionDTO;
                 }
-        ).toList();
-        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"Hiring process is ongoing for the occupation of " + occupationTittle + ".",jobTitleDescriptionDTOS ) );
+        ).toList ( );
+        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true , HttpStatus.OK , "Hiring process is ongoing for the occupation of " + occupationTittle + "." , jobTitleDescriptionDTOS ) );
     }
 
     @Override
     public ResponseEntity < ResponseDTO > searchByCategory ( String category ) {
-        if(jobServiceRepo.findByCategory ( category ).isEmpty () )
-        {
-            return ResponseEntity.status ( HttpStatus.BAD_REQUEST ).body ( new ResponseDTO ( false,HttpStatus.BAD_REQUEST,"No Hiring in this Category!!","" ) );
+        if ( jobServiceRepo.findByCategory ( category ).isEmpty ( ) ) {
+            return ResponseEntity.status ( HttpStatus.BAD_REQUEST ).body ( new ResponseDTO ( false , HttpStatus.BAD_REQUEST , "No Hiring in this Category!!" , "" ) );
         }
-        List<Job> jobs=jobServiceRepo.findByCategory (category);
-        List< JobTitleDescriptionDTO > jobTitleDescriptionDTOS=jobs.stream ().map (
+        List < Job > jobs = jobServiceRepo.findByCategory ( category );
+        List < JobTitleDescriptionDTO > jobTitleDescriptionDTOS = jobs.stream ( ).map (
                 job -> {
-                    JobTitleDescriptionDTO jobTitleDescriptionDTO=new JobTitleDescriptionDTO ();
+                    JobTitleDescriptionDTO jobTitleDescriptionDTO = new JobTitleDescriptionDTO ( );
                     jobTitleDescriptionDTO.setOccupationTitle ( job.getOccupationTitle ( ) );
                     jobTitleDescriptionDTO.setJobDescription ( job.getJobDescription ( ) );
                     return jobTitleDescriptionDTO;
                 }
-        ).toList();
-        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"Hiring process is ongoing for the Category of " + category + ".",jobTitleDescriptionDTOS ) );
+        ).toList ( );
+        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true , HttpStatus.OK , "Hiring process is ongoing for the Category of " + category + "." , jobTitleDescriptionDTOS ) );
     }
 
     @Override
-    public ResponseEntity < ResponseDTO > searchByNameAndTitle ( JobVacancyDTO jobVacancyDTO1) {
-        List<Job> job=jobServiceRepo.findByCompanyIdAndOccupationTitle ( jobVacancyDTO1.getCompanyId (), jobVacancyDTO1.getOccupationTitle ( ) );
-         if(job.isEmpty ())
-         {
-             return ResponseEntity.status ( HttpStatus.BAD_REQUEST ).body ( new ResponseDTO ( false,HttpStatus.BAD_REQUEST,"No Hiring in this Company and OccupationTitle!!","" ) );
-         }
-         List<JobVacancyDTO> jobVacancyDTOS=job.stream ().map (
-                 job1 -> {
-                     JobVacancyDTO jobVacancyDTO=new JobVacancyDTO ();
-                     jobVacancyDTO.setCompanyId ( job1.getCompanyId ( ) );
-                     jobVacancyDTO.setJobId ( job1.getJobId () );
-                     jobVacancyDTO.setCategory ( job1.getCategory ( ) );
-                     jobVacancyDTO.setJobDescription ( job1.getJobDescription ( ) );
-                     jobVacancyDTO.setSectorVacancy ( job1.getSectorVacancy ( ) );
-                     jobVacancyDTO.setSalaries ( job1.getSalaries ( ) );
-                     jobVacancyDTO.setDurationEmployment ( job1.getDurationEmployment ( ) );
-                     jobVacancyDTO.setOccupationTitle ( job1.getOccupationTitle ( ) );
-                     jobVacancyDTO.setPreferredSex ( job1.getPreferredSex ( ) );
-                     jobVacancyDTO.setQualificationWorkExperience ( job1.getQualificationWorkExperience ( ) );
-                     jobVacancyDTO.setReqNoEmployees ( job1.getReqNoEmployees ( ) );
-                     return jobVacancyDTO;
-                 } ).toList ( );
+    public ResponseEntity < ResponseDTO > searchByNameAndTitle ( JobVacancyDTO jobVacancyDTO1 ) {
+        List < Job > job = jobServiceRepo.findByCompanyIdAndOccupationTitle ( jobVacancyDTO1.getCompanyId ( ) , jobVacancyDTO1.getOccupationTitle ( ) );
+        if ( job.isEmpty ( ) ) {
+            return ResponseEntity.status ( HttpStatus.BAD_REQUEST ).body ( new ResponseDTO ( false , HttpStatus.BAD_REQUEST , "No Hiring in this Company and OccupationTitle!!" , "" ) );
+        }
+        List < JobVacancyDTO > jobVacancyDTOS = job.stream ( ).map (
+                job1 -> {
+                    JobVacancyDTO jobVacancyDTO = new JobVacancyDTO ( );
+                    jobVacancyDTO.setCompanyId ( job1.getCompanyId ( ) );
+                    jobVacancyDTO.setJobId ( job1.getJobId ( ) );
+                    jobVacancyDTO.setCategory ( job1.getCategory ( ) );
+                    jobVacancyDTO.setJobDescription ( job1.getJobDescription ( ) );
+                    jobVacancyDTO.setSectorVacancy ( job1.getSectorVacancy ( ) );
+                    jobVacancyDTO.setSalaries ( job1.getSalaries ( ) );
+                    jobVacancyDTO.setDurationEmployment ( job1.getDurationEmployment ( ) );
+                    jobVacancyDTO.setOccupationTitle ( job1.getOccupationTitle ( ) );
+                    jobVacancyDTO.setPreferredSex ( job1.getPreferredSex ( ) );
+                    jobVacancyDTO.setQualificationWorkExperience ( job1.getQualificationWorkExperience ( ) );
+                    jobVacancyDTO.setReqNoEmployees ( job1.getReqNoEmployees ( ) );
+                    return jobVacancyDTO;
+                } ).toList ( );
 
 
-         return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"Details of Particular Job by Title and Company",jobVacancyDTOS ) );
+        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true , HttpStatus.OK , "Details of Particular Job by Title and Company" , jobVacancyDTOS ) );
 
     }
 
     @Override
     public ResponseEntity < ResponseDTO > listOfJobByTittle ( ) {
-        List<String> list=jobServiceRepo.findAllByOccupationTitle (  );
-        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"List of OccupationTitle",list ) );
+        List < String > list = jobServiceRepo.findAllByOccupationTitle ( );
+        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true , HttpStatus.OK , "List of OccupationTitle" , list ) );
     }
 
 

@@ -1,11 +1,8 @@
 package com.jsp.Job.service.Impl;
 
 import com.jsp.Job.dto.CategoryDTO;
-import com.jsp.Job.dto.JobVacancyDTO;
 import com.jsp.Job.dto.ResponseDTO;
 import com.jsp.Job.entity.Category;
-import com.jsp.Job.entity.Company;
-import com.jsp.Job.entity.Job;
 import com.jsp.Job.repository.service.CategoryServiceRepo;
 import com.jsp.Job.repository.service.CompanyServiceRep;
 import com.jsp.Job.repository.service.JobServiceRepo;
@@ -16,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

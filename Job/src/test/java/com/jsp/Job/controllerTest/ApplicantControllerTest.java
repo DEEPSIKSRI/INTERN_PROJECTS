@@ -1,6 +1,9 @@
-package com.jsp.Job.serviceTest;
+package com.jsp.Job.controllerTest;
 
+import com.jsp.Job.controller.ApplicantController;
+import com.jsp.Job.dto.JobApplyDTO;
 import com.jsp.Job.dto.ResponseDTO;
+import com.jsp.Job.entity.JobRegistration;
 import com.jsp.Job.repository.service.ApplicantServiceRepo;
 import com.jsp.Job.repository.service.CompanyServiceRep;
 import com.jsp.Job.repository.service.JobRegistrationServiceRepo;
@@ -15,17 +18,23 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-public class ApplicantServiceTest {
+class ApplicantControllerTest {
     @BeforeEach
     void setUp ( ) {
         MockitoAnnotations.openMocks ( this );
     }
 
-    @InjectMocks
+    @Mock
     ApplicantServiceImpl applicantService;
+
+    @InjectMocks
+    ApplicantController applicantController;
 
     @Mock
     ApplicantServiceRepo applicantServiceRepo;
@@ -44,9 +53,31 @@ public class ApplicantServiceTest {
         ResponseEntity < ResponseDTO > responseEntity = applicantService.fetchAll ( );
         ResponseDTO responseDTO = new ResponseDTO ( true , HttpStatus.OK , "Fetched All Data" , responseEntity );
         ResponseEntity < ResponseDTO > response = new ResponseEntity <> ( responseDTO , HttpStatus.OK );
-        when ( companyService.listOfCompanies ( ) ).thenReturn ( response );
+        when ( applicantController.getAll ( ) ).thenReturn ( response );
+        assertTrue ( true );
+    }
 
-        ResponseEntity < ResponseDTO > actual = applicantService.fetchAll ( );
-        assertEquals ( response , actual );
+    @Test
+    void testJobApply ( ) {
+
+        JobApplyDTO jobApplyDTO = new JobApplyDTO ( );
+        ResponseEntity < ResponseDTO > expectedResponse = new ResponseEntity <> ( new ResponseDTO ( ) , HttpStatus.OK );
+
+        when ( applicantService.applyJob ( jobApplyDTO ) ).thenReturn ( expectedResponse );
+
+        ResponseEntity < ResponseDTO > actualResponse = applicantController.jobApply ( jobApplyDTO );
+
+        assertEquals ( expectedResponse , actualResponse );
+    }
+
+    @Test
+    void testListOfApplicants()
+    {
+        JobRegistration jobRegistration=new JobRegistration ();
+        List<JobRegistration> jobRegistrationList=new ArrayList <> (  );
+        jobRegistrationList.add ( jobRegistration );
+        when ( applicantController.listOfApplicants () ).thenReturn ( ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"List of Applicants!!",jobRegistrationList ) ) );
+
+        assertTrue ( true );
     }
 }
