@@ -2,9 +2,7 @@ package com.jsp.Job.controller;
 
 import com.jsp.Job.api.CategoryApi;
 import com.jsp.Job.dto.CategoryDTO;
-import com.jsp.Job.dto.JobVacancyDTO;
 import com.jsp.Job.dto.ResponseDTO;
-import com.jsp.Job.entity.Category;
 import com.jsp.Job.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,22 +16,22 @@ public class CategoryController implements CategoryApi {
 
     @Override
     public ResponseEntity < ResponseDTO > listOfCategory ( ) {
-        return categoryService.listOfCategory();
+        return categoryService.listOfCategory ( );
     }
 
     @Override
     public ResponseEntity < ResponseDTO > addCategory ( CategoryDTO categoryDTO ) {
-        return categoryService.saveCategory(categoryDTO);
+        return categoryService.saveCategory ( categoryDTO );
     }
 
     @Override
     public ResponseEntity < ResponseDTO > updateCategory ( CategoryDTO categoryDTO ) {
-        return categoryService.updateCategory(categoryDTO);
+        return categoryService.updateCategory ( categoryDTO );
     }
 
     @Override
     public ResponseEntity < ResponseDTO > deleteCategory ( String categoryName ) {
-        return categoryService.deleteCategory(categoryName);
+        return categoryService.deleteCategory ( categoryName );
     }
 
 

@@ -10,7 +10,6 @@ import com.jsp.Job.repository.service.CompanyServiceRep;
 import com.jsp.Job.repository.service.JobRegistrationServiceRepo;
 import com.jsp.Job.repository.service.JobServiceRepo;
 import com.jsp.Job.service.ApplicantService;
-import com.jsp.Job.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -134,20 +133,19 @@ public class ApplicantServiceImpl implements ApplicantService {
 
     @Override
     public ResponseEntity < ResponseDTO > feedBackImpl ( FeedBackDTO feedBackDTO ) {
-        JobRegistration jobRegistration=jobRegistrationServiceRepo.findByApplicantIdAndJobId ( feedBackDTO.getApplicantId ( ),feedBackDTO.getJobId ()) ;
-        if (jobRegistration == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ResponseDTO(false, HttpStatus.NOT_FOUND, "Application not found", ""));
+        JobRegistration jobRegistration = jobRegistrationServiceRepo.findByApplicantIdAndJobId ( feedBackDTO.getApplicantId ( ) , feedBackDTO.getJobId ( ) );
+        if ( jobRegistration == null ) {
+            return ResponseEntity.status ( HttpStatus.NOT_FOUND )
+                    .body ( new ResponseDTO ( false , HttpStatus.NOT_FOUND , "Application not found" , "" ) );
         }
-          if( jobRegistration.isPendingApplication ( ) )
-          {
-              return ResponseEntity.status ( HttpStatus.BAD_REQUEST )
-                      .body ( new ResponseDTO ( false , HttpStatus.BAD_REQUEST , "Already Reviewed Your Application.." , "" ) );
-          }
-           jobRegistration.setPendingApplication ( true );
-          jobRegistration.setRemarks ( feedBackDTO.getRemarks ( ) );
-          jobRegistration.setDateTimeApproved ( new Timestamp ( System.currentTimeMillis () ) );
-          jobRegistrationServiceRepo.save ( jobRegistration );
+        if ( jobRegistration.isPendingApplication ( ) ) {
+            return ResponseEntity.status ( HttpStatus.BAD_REQUEST )
+                    .body ( new ResponseDTO ( false , HttpStatus.BAD_REQUEST , "Already Reviewed Your Application.." , "" ) );
+        }
+        jobRegistration.setPendingApplication ( true );
+        jobRegistration.setRemarks ( feedBackDTO.getRemarks ( ) );
+        jobRegistration.setDateTimeApproved ( new Timestamp ( System.currentTimeMillis ( ) ) );
+        jobRegistrationServiceRepo.save ( jobRegistration );
 
         return ResponseEntity.status ( HttpStatus.OK )
                 .body ( new ResponseDTO ( true , HttpStatus.OK , "Reviewed Your Application!!" , "" ) );
@@ -155,38 +153,36 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
-    public ResponseEntity < ResponseDTO > appliedJobs (Long applicantId ) {
-        Optional < Applicant > applicant=getApplicantOrThrowException ( applicantId );
-        if(applicant.isEmpty ())
-        {
-           return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( false,HttpStatus.BAD_REQUEST,"There ia No Applicants for given Id: "+applicantId,"" ) );
+    public ResponseEntity < ResponseDTO > appliedJobs ( Long applicantId ) {
+        Optional < Applicant > applicant = getApplicantOrThrowException ( applicantId );
+        if ( applicant.isEmpty ( ) ) {
+            return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( false , HttpStatus.BAD_REQUEST , "There ia No Applicants for given Id: " + applicantId , "" ) );
         }
-        List < JobRegistration > applicants=jobRegistrationServiceRepo.findByApplicantId(applicantId);
-        if(applicants.isEmpty ())
-        {
-            return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( false,HttpStatus.BAD_REQUEST,"Application Not Found!!","" ) );
+        List < JobRegistration > applicants = jobRegistrationServiceRepo.findByApplicantId ( applicantId );
+        if ( applicants.isEmpty ( ) ) {
+            return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( false , HttpStatus.BAD_REQUEST , "Application Not Found!!" , "" ) );
 
         }
-        List<AppliedJobsDTO> appliedJobs=applicants.stream( ).map (
+        List < AppliedJobsDTO > appliedJobs = applicants.stream ( ).map (
                 jobRegistration ->
                 {
-                    Job job=jobServiceRepo.findById ( jobRegistration.getJobId ( ) ).get ();
-                    Company company=companyServiceRep.findById ( jobRegistration.getCompanyId ( ) ).get ();
-                    AppliedJobsDTO appliedJobsDTO=new AppliedJobsDTO ();
+                    Job job = jobServiceRepo.findById ( jobRegistration.getJobId ( ) ).get ( );
+                    Company company = companyServiceRep.findById ( jobRegistration.getCompanyId ( ) ).get ( );
+                    AppliedJobsDTO appliedJobsDTO = new AppliedJobsDTO ( );
                     appliedJobsDTO.setCompanyName ( company.getName ( ) );
-                    appliedJobsDTO.setOccupationTittle ( job.getOccupationTitle () );
+                    appliedJobsDTO.setOccupationTittle ( job.getOccupationTitle ( ) );
                     appliedJobsDTO.setAddress ( company.getAddress ( ) );
-                    appliedJobsDTO.setStatus ( jobRegistration.getRemarks () );
-                    appliedJobsDTO.setDateOfRemarks ( jobRegistration.getDateTimeApproved () );
+                    appliedJobsDTO.setStatus ( jobRegistration.getRemarks ( ) );
+                    appliedJobsDTO.setDateOfRemarks ( jobRegistration.getDateTimeApproved ( ) );
                     return appliedJobsDTO;
                 }
-        ).collect( Collectors.toList());
+        ).collect ( Collectors.toList ( ) );
 
-        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"Applied Jobs!!",appliedJobs ) );
+        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true , HttpStatus.OK , "Applied Jobs!!" , appliedJobs ) );
     }
 
     @Override
-    public ResponseEntity<ResponseDTO> sendHtmlContent(Long applicantId) {
+    public ResponseEntity < ResponseDTO > sendHtmlContent ( Long applicantId ) {
         Optional < Applicant > applicant = getApplicantOrThrowException ( applicantId );
         if ( applicant.isEmpty ( ) ) {
             return ResponseEntity.status ( HttpStatus.BAD_REQUEST ).body ( new ResponseDTO ( false , HttpStatus.BAD_REQUEST , "There is No Applicant for the given Id: " + applicantId , "" ) );
@@ -210,19 +206,19 @@ public class ApplicantServiceImpl implements ApplicantService {
                     "\n" +
                     "<div style=\"max-width: 600px; margin: 20px auto; padding: 20px; background-color: #f7f7f7; border-radius: 10px;\">\n" +
                     "    <h2 style=\"color: #333333;\">Application Review Notification</h2>\n" +
-                    "    <p>Dear " + applicant.get().getFirstName() + ",</p>\n" +
+                    "    <p>Dear " + applicant.get ( ).getFirstName ( ) + ",</p>\n" +
                     "\n" +
                     "    <p>We hope this email finds you well.</p>\n" +
                     "\n" +
-                    "    <p>We wanted to inform you that we have reviewed your application for the position of " + job.getOccupationTitle() + ". We appreciate the time and effort you put into your application.</p>\n" +
+                    "    <p>We wanted to inform you that we have reviewed your application for the position of " + job.getOccupationTitle ( ) + ". We appreciate the time and effort you put into your application.</p>\n" +
                     "\n" +
                     "    <p>We genuinely appreciate your interest in joining our team and encourage you to keep an eye on our career page for future opportunities that match your skills and experience.</p>\n" +
                     "\n" +
-                    "    <p>Thank you again for your interest in " + company.getName() + ".</p>\n" +
+                    "    <p>Thank you again for your interest in " + company.getName ( ) + ".</p>\n" +
                     "\n" +
                     "    <p>Best regards,</p>\n" +
-                    "    " + company.getName() + "<br>\n" +
-                    "    " + company.getContactNumber() + "</p>\n" +
+                    "    " + company.getName ( ) + "<br>\n" +
+                    "    " + company.getContactNumber ( ) + "</p>\n" +
                     "</div>\n" +
                     "\n" +
                     "</body>\n" +
@@ -234,7 +230,7 @@ public class ApplicantServiceImpl implements ApplicantService {
 
     @Override
     public ResponseEntity < ResponseDTO > fetchAll ( ) {
-        return companyService.listOfCompanies ();
+        return companyService.listOfCompanies ( );
     }
 
 

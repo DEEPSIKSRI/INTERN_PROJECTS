@@ -1,9 +1,7 @@
 package com.jsp.Job.api;
 
 import com.jsp.Job.dto.CategoryDTO;
-import com.jsp.Job.dto.JobVacancyDTO;
 import com.jsp.Job.dto.ResponseDTO;
-import com.jsp.Job.entity.Category;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

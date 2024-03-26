@@ -2,13 +2,11 @@ package com.jsp.Job.api;
 
 import com.jsp.Job.dto.CompanyDTO;
 import com.jsp.Job.dto.ResponseDTO;
-import com.jsp.Job.entity.Company;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RequestMapping("/company")
 @RestController

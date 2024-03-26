@@ -1,7 +1,6 @@
 package com.jsp.Job.service;
 
 import com.jsp.Job.dto.CategoryDTO;
-import com.jsp.Job.dto.JobVacancyDTO;
 import com.jsp.Job.dto.ResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
