@@ -3,6 +3,7 @@ package com.jsp.Job.tokenService;
 import com.jsp.Job.entity.User;
 import com.jsp.Job.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,8 @@ import java.util.Set;
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
 
     @Override
@@ -26,7 +28,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         User user = userRepository.findByUsername ( username );
 
         Set < GrantedAuthority > authorities = new HashSet <> ( );
-        authorities.add ( new SimpleGrantedAuthority ( "ROLE" + user.getRole ( ) ) );
+        authorities.add ( new SimpleGrantedAuthority ( "ROLE_" + user.getRole ( ) ) );
 
         return org.springframework.security.core.userdetails.User.withUsername ( user.getUsername ( ) )
                 .password ( user.getPassword ( ) )

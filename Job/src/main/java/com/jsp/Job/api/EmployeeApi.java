@@ -18,4 +18,8 @@ public interface EmployeeApi {
     @PreAuthorize( "hasAnyRole('ADMIN','USER')" )
     @PostMapping("/addEmployee")
     ResponseEntity<ResponseDTO> addEmployee( @Valid @RequestBody AddEmployeeDTO addEmployeeDTO );
+
+    @PreAuthorize ( "hasAnyRole('ADMIN')" )
+    @PutMapping("/updateEmployee")
+    ResponseEntity<ResponseDTO> updateEmployee(@RequestBody AddEmployeeDTO addEmployeeDTO);
 }

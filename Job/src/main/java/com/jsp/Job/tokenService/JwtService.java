@@ -22,6 +22,7 @@ public class JwtService {
 
     private static final String SECRET_KEY = "3c791e362f498b46b0a1e158be23a146c6546a08e834270abfe496f08be045bb";
 
+
     public String extractUsername ( String token ) {
         return extractClaim ( token , Claims::getSubject );
     }
@@ -35,7 +36,7 @@ public class JwtService {
         return Jwts
                 .parser ( )
                 .setSigningKey ( getSignInKey ( ) )
-//                .build ( )
+                .build ()
                 .parseClaimsJws ( token )
                 .getBody ( );
     }
@@ -60,9 +61,11 @@ public class JwtService {
         return extractExpiration ( token ).before ( new Date ( ) );
     }
 
-    private Date extractExpiration ( String token ) {
-        return extractClaim ( token , Claims::getExpiration );
-    }
+    private Date extractExpiration(String token) {
+            return extractClaim(token, Claims::getExpiration);
+        }
+
+
 
 
     public String generateToken ( String username , String role ) {
