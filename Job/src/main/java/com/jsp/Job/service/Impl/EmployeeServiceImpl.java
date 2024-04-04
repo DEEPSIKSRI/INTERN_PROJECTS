@@ -56,9 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public ResponseEntity<ResponseDTO> updateEmployee(AddEmployeeDTO addEmployeeDTO)
     {
         Employee employee=employeeServiceRepo.findById(addEmployeeDTO.getEmployeeId ()).get ();
-         getResponseDTOResponseEntity ( addEmployeeDTO , employee );
-        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"Employee Updated Successfully!!","" ) );
-
+        return getResponseDTOResponseEntity ( addEmployeeDTO , employee );
     }
 
     private ResponseEntity < ResponseDTO > getResponseDTOResponseEntity ( AddEmployeeDTO addEmployeeDTO , Employee employee ) {
@@ -79,7 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setCompany (company);
         employee.setEmpPhoto ( addEmployeeDTO.getEmpPhoto ( ) );
         employeeServiceRepo.save(employee);
-        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"Employee Added Successfully!!",employee ) );
+        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"Employee Added/Updated Successfully!!",employee ) );
     }
 
 }
