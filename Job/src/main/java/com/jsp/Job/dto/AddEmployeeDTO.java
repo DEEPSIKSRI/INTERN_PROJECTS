@@ -9,6 +9,8 @@ import java.util.Date;
 @Data
 public class AddEmployeeDTO {
 
+    private String employeeId;
+
     @NotBlank(message = "First name is required")
     private String firstName;
 
@@ -50,4 +52,9 @@ public class AddEmployeeDTO {
 
     @NotBlank(message = "Company name is required")
     private String companyName;
+
+    @Pattern(regexp = ".*\\.(png|jpg)", message = "Employee photo must be a PNG or JPG file")
+     private String empPhoto;
+
+
 }

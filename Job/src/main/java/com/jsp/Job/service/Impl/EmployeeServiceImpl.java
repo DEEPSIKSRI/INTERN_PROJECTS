@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +48,18 @@ public class EmployeeServiceImpl implements EmployeeService {
             return ResponseEntity.status ( HttpStatus.BAD_REQUEST ).body ( new ResponseDTO ( false,HttpStatus.BAD_REQUEST,"Employee Already Exists!!","" ) );
         }
         Employee employee = new Employee();
+        employee.setEmployeeId ( employee.getEmployeeId ( ) );
+        return getResponseDTOResponseEntity ( addEmployeeDTO , employee );
+            }
+
+    @Override
+    public ResponseEntity<ResponseDTO> updateEmployee(AddEmployeeDTO addEmployeeDTO)
+    {
+        Employee employee=employeeServiceRepo.findById(addEmployeeDTO.getEmployeeId ()).get ();
+        return getResponseDTOResponseEntity ( addEmployeeDTO , employee );
+    }
+
+    private ResponseEntity < ResponseDTO > getResponseDTOResponseEntity ( AddEmployeeDTO addEmployeeDTO , Employee employee ) {
         employee.setFirstName(addEmployeeDTO.getFirstName());
         employee.setLastName(addEmployeeDTO.getLastName());
         employee.setMiddleName(addEmployeeDTO.getMiddleName());
@@ -62,7 +75,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         Company company=new Company ();
         company.setName ( addEmployeeDTO.getCompanyName ( ) );
         employee.setCompany (company);
+        employee.setEmpPhoto ( addEmployeeDTO.getEmpPhoto ( ) );
         employeeServiceRepo.save(employee);
-        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"Employee Added Successfully!!",employee ) );
+        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"Employee Added/Updated Successfully!!",employee ) );
     }
+
 }

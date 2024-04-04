@@ -10,4 +10,6 @@ public interface EmployeeService {
     ResponseEntity < ResponseDTO > listOfAllEmployees ( );
 
     ResponseEntity< ResponseDTO> saveEmployee ( AddEmployeeDTO addEmployeeDTO );
+
+    ResponseEntity< ResponseDTO> updateEmployee ( AddEmployeeDTO addEmployeeDTO );
 }

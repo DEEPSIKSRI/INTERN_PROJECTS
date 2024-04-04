@@ -22,4 +22,9 @@ public class EmployeeController  implements EmployeeApi {
     public ResponseEntity < ResponseDTO > addEmployee ( AddEmployeeDTO addEmployeeDTO ) {
         return employeeService.saveEmployee(addEmployeeDTO);
     }
+
+    @Override
+    public ResponseEntity < ResponseDTO > updateEmployee ( AddEmployeeDTO addEmployeeDTO ) {
+        return employeeService.updateEmployee(addEmployeeDTO);
+    }
 }
