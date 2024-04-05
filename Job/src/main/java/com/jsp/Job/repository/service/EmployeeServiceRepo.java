@@ -15,4 +15,6 @@ public interface EmployeeServiceRepo {
     Optional < Employee > findById ( String employeeId );
 
     void deleteById ( String empId );
+
+    void deleteAll ( );
 }

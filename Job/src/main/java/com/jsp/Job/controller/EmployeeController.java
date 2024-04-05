@@ -32,4 +32,9 @@ public class EmployeeController  implements EmployeeApi {
     public ResponseEntity < ResponseDTO > deleteEmployee ( String empId ) {
         return employeeService.deleteEmployee(empId);
     }
+
+    @Override
+    public ResponseEntity < ResponseDTO > deleteAllEmployees ( ) {
+        return employeeService.deleteAllEmployees();
+    }
 }
