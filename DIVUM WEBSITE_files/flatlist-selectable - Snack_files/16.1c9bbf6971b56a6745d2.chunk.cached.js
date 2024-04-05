@@ -1,0 +1,1 @@
+(self.webpackJsonp=self.webpackJsonp||[]).push([[16],{1047:function(e){e.exports=JSON.parse('{"printWidth":80,"tabWidth":2,"singleQuote":true,"trailingComma":"es5","bracketSpacing":true,"jsxBracketSameLine":true}')}}]);

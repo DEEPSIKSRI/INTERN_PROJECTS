@@ -1,0 +1,265 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}.bg
+{
+    background-color: blue;
+    height: 1000px;
+}
+header{
+    width:100%;
+    margin:auto;
+    overflow:hidden;
+}
+video
+{
+    margin-left: 200px;
+    width: 1500px;
+    height: 500px;
+}
+.nav{
+ margin-right:300px;
+ margin-left: 800px;
+ margin-top: 30px;
+ padding:20px;
+ display:block;
+ width:100%;
+}
+#logo
+{
+    padding-left: 10px;
+    padding-right: 10px;
+    float:left;
+    height:100px;
+    width:100px;
+    margin-left:350px;
+    margin-top:20px;
+}
+.tags
+{
+    color:white;
+    font-size:20px;
+    padding:10px;
+    text-decoration: none;
+}
+#content1
+{
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    padding: 10px;
+    margin-left: 20px;
+    margin-top: 200px;
+}
+#content2
+{
+    text-align: center;
+    color:black;
+    padding: 10px;
+    margin-left: 200px;
+    margin-top: 100px;
+    font-size: large;
+
+}
+#content3
+{
+    text-align: center;
+    color: gray;
+    padding: 10px;
+    margin-left: 200px;
+    margin-top: 50px;
+    font-size: medium;
+
+}
+.button
+{
+    text-align: center;
+    margin-left: 900px;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 20px;
+}
+.Grid-container
+{
+    display: grid;
+    grid-template-columns: auto auto ;
+    column-gap: 1px;
+    margin-bottom: 150px;
+    margin-left: 20px;
+    margin-top: 90px;
+    
+}
+.Container1
+{
+ margin-left: 400px;
+
+}
+#logo1
+{
+margin-left: 20px;
+}
+
+
+.Grid-container1
+{
+    display: grid;
+    grid-template-columns:auto auto;
+    column-gap: 1px;
+    margin-left: 20px;
+    margin-right: 400px;
+    
+}
+.Container2
+{
+ 
+    font-size: larger;
+    color:#454545;
+    font-size: 17px;
+    /* padding: 2px; */
+    margin-left: 20px;
+}
+
+.logo2
+{
+    /* padding: 20px; */
+    font-size: 30px;
+    text-align: center;
+    width: 50%;
+    height: 50%;
+   margin-left:350px;
+}
+
+.Grid-container2
+{
+    display: grid;
+    grid-template-columns: auto auto ;
+    column-gap: 1px;
+    /* margin-left: 20px; */
+    /* margin-top: 10px; */
+    
+}
+.Container3
+{
+ margin-left: 400px;
+ 
+
+}
+#logo3
+{
+margin-bottom: 150px;
+margin-right: 300px;
+} 
+
+
+.Grid-container3
+{
+    display: grid;
+    grid-template-columns:auto auto;
+    column-gap: 1px;
+    /* margin-left: 20px;
+    margin-right: 400px;
+    margin-top: 50px; */
+    
+}
+ .Container4
+{
+ 
+    /* font-size: larger;
+    color:#454545;
+    font-size: 17px;
+    padding: 2px; */
+    padding-top: 50px;
+    margin-right: 400px;
+}
+
+.logo4
+{
+    /* padding: 10px;
+    font-size: 30px;
+    text-align: center; */
+    width: 400px;
+    height: 400px;
+   margin-left:350px;
+   margin-top: 0px;
+}
+.Grid-container4
+{
+    
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 1px;
+    margin-left: 500px;
+    margin-bottom: 20px;
+    padding-top: 100px;
+    margin-top: 10px;
+    background-color: white;
+    padding-left: 500px;
+    margin-left: 10px;
+    margin-right: 10px;
+   
+}
+#Sentence
+{
+ font-size: 50px;
+ color: black;
+ margin-left:60px;
+ margin-bottom: 10px;
+ text-align: right;
+ margin-right: 100px;
+}
+
+.firstimg
+{
+    width: 75px;
+    height: 75px;
+    padding-top: 10px;
+}
+#secimg
+{
+    width: 90px;
+    height: 85px;
+    padding-top: 10px;
+
+}
+#thirdimg
+{
+    width: 75px;
+    height: 75px;
+    padding-top: 10px;
+}
+#fourthimg
+{
+    width: 75px;
+    height: 75px;
+    padding-top: 10px;
+}
+#head
+{
+    text-align: center;
+    font-size: 30px;
+    padding-top: 50px;
+
+}
+
+.wplogo
+{
+  margin-left: 1700px;
+  position: fixed;
+  bottom: 80px;
+
+} 
+.scroll
+{
+  margin-left: 1700px;
+  position: fixed;
+  bottom: 10px;
+
+}
+#myImage
+{
+  width: 75px;
+    height: 75px;
+    padding-top: 10px;
+}

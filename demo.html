@@ -1,0 +1,54 @@
+
+</html> -->
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>Mouseover Images in JavaScript</title>
+</head>
+<body>
+  <img src="https://divum.in/images/home/welcome.png" alt="Image 1" onmouseover="swapImage(this)" onmouseout="restoreImage(this)">
+  <img src="https://divum.in/images/home/solution.png" alt="Image 2" onmouseover="swapImage(this)" onmouseout="restoreImage(this)">
+  <!-- Add more images as needed -->
+
+  <!-- <script>
+    // Preload the hover images
+    const hoverImages = [];
+    const imageElements = document.getElementsByTagName("img");
+
+    for (let i = 0; i < imageElements.length; i++) {
+      const image = new Image();
+      image.src = "hover_" + imageElements[i].src;
+      hoverImages.push(image);
+    }
+
+    function swapImage(image) {
+      // Get the index of the image in the imageElements collection
+      const index = Array.from(imageElements).indexOf(image);
+      // Change the src attribute to the hover image
+      image.src = hoverImages[index].src;
+    }
+
+    function restoreImage(image) {
+      // Get the index of the image in the imageElements collection
+      const index = Array.from(imageElements).indexOf(image);
+      // Restore the original src attribute
+      image.src = "image" + (index + 1) + ".jpg";
+    }
+  </script>
+</body>
+</html> --> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mouseover Images in JavaScript</title>
+</head>
+<body>
+  <div>
+  <img id="pic1" src="https://divum.in/images/home/welcome.png" alt="Image 1" >
+  <img id="pic2" src="https://divum.in/images/home/solution.png" alt="Image 2" >
+  
+  <script src="script.js"></script>
+  /div>
+</body>
+</html>

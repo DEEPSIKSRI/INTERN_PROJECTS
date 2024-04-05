@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mouseover Images Example</title>
+  <style>
+    .enlarged-image {
+      width: 200px; 
+      height: 200px; 
+      transition: transform 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <img src="image1.jpg" alt="Image 1" onmouseover="enlargeImage(this)" onmouseout="restoreImage(this)">
+  <img src="image2.jpg" alt="Image 2" onmouseover="enlargeImage(this)" onmouseout="restoreImage(this)">
+
+  <script src="script.js"></script>
+</body>
+</html>
