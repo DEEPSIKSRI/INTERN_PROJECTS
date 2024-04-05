@@ -5,7 +5,6 @@ import com.jsp.Job.dto.EmployeeDetailsDTO;
 import com.jsp.Job.dto.ResponseDTO;
 import com.jsp.Job.entity.Company;
 import com.jsp.Job.entity.Employee;
-import com.jsp.Job.repository.EmployeeRepository;
 import com.jsp.Job.repository.service.CompanyServiceRep;
 import com.jsp.Job.repository.service.EmployeeServiceRepo;
 import com.jsp.Job.service.EmployeeService;
@@ -16,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,22 +28,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public ResponseEntity < ResponseDTO > listOfAllEmployees ( ) {
-        List <Employee> employee=employeeServiceRepo.findAll();
-        List< EmployeeDetailsDTO > employeeDetailsDTOS=employee.stream( ).map (
-                employee1-> {
-                  EmployeeDetailsDTO employeeDetailsDTO=new EmployeeDetailsDTO ();
-                  employeeDetailsDTO.setEmployeeId ( employee1.getEmployeeId ( ) );
-                  employeeDetailsDTO.setFirstName ( employee1.getFirstName ( ) );
-                  employeeDetailsDTO.setCellNo ( employee1.getCellNo ( ) );
-                  employeeDetailsDTO.setPosition ( employee1.getPosition ( ) );
-                  employeeDetailsDTO.setSex ( employee1.getSex ( ) );
-                  employeeDetailsDTO.setAge ( employee1.getAge () );
-                  employeeDetailsDTO.setAddress ( employee1.getAddress ( ) );
-                  return employeeDetailsDTO;
+        List < Employee > employee = employeeServiceRepo.findAll ( );
+        List < EmployeeDetailsDTO > employeeDetailsDTOS = employee.stream ( ).map (
+                employee1 -> {
+                    EmployeeDetailsDTO employeeDetailsDTO = new EmployeeDetailsDTO ( );
+                    employeeDetailsDTO.setEmployeeId ( employee1.getEmployeeId ( ) );
+                    employeeDetailsDTO.setFirstName ( employee1.getFirstName ( ) );
+                    employeeDetailsDTO.setCellNo ( employee1.getCellNo ( ) );
+                    employeeDetailsDTO.setPosition ( employee1.getPosition ( ) );
+                    employeeDetailsDTO.setSex ( employee1.getSex ( ) );
+                    employeeDetailsDTO.setAge ( employee1.getAge ( ) );
+                    employeeDetailsDTO.setAddress ( employee1.getAddress ( ) );
+                    return employeeDetailsDTO;
                 }
-        ).toList ();
-        System.out.println (jobName +"------->JobName");
-        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"List of Employee Details!!",employeeDetailsDTOS ) );
+        ).toList ( );
+        System.out.println ( jobName + "------->JobName" );
+        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true , HttpStatus.OK , "List of Employee Details!!" , employeeDetailsDTOS ) );
     }
 
     @Override
@@ -55,40 +53,46 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         Employee employee = new Employee ( );
         employee.setEmployeeId ( addEmployeeDTO.getEmployeeId ( ) );
-        return getResponseDTOResponseEntity ( addEmployeeDTO,employee );
+        return getResponseDTOResponseEntity ( addEmployeeDTO , employee );
     }
+
     @Override
-    public ResponseEntity<ResponseDTO> updateEmployee(AddEmployeeDTO addEmployeeDTO)
-    {
-        Employee employee=employeeServiceRepo.findById(addEmployeeDTO.getEmployeeId ()).get ();
+    public ResponseEntity < ResponseDTO > updateEmployee ( AddEmployeeDTO addEmployeeDTO ) {
+        Employee employee = employeeServiceRepo.findById ( addEmployeeDTO.getEmployeeId ( ) ).get ( );
         return getResponseDTOResponseEntity ( addEmployeeDTO , employee );
     }
 
     @Override
     public ResponseEntity < ResponseDTO > deleteEmployee ( String empId ) {
-        employeeServiceRepo.deleteById(empId);
-        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"Employee Deleted Successfully!!","" ) );
+        employeeServiceRepo.deleteById ( empId );
+        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true , HttpStatus.OK , "Employee Deleted Successfully!!" , "" ) );
+    }
+
+    @Override
+    public ResponseEntity < ResponseDTO > deleteAllEmployees ( ) {
+        employeeServiceRepo.deleteAll();
+        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"Deleted All Employees Successfully!!","" ) );
     }
 
     private ResponseEntity < ResponseDTO > getResponseDTOResponseEntity ( AddEmployeeDTO addEmployeeDTO , Employee employee ) {
-        employee.setFirstName(addEmployeeDTO.getFirstName());
-        employee.setLastName(addEmployeeDTO.getLastName());
-        employee.setMiddleName(addEmployeeDTO.getMiddleName());
-        employee.setAddress(addEmployeeDTO.getAddress());
-        employee.setBirthdate(addEmployeeDTO.getBirthdate());
-        employee.setBirthplace(addEmployeeDTO.getBirthplace());
-        employee.setAge(addEmployeeDTO.getAge());
-        employee.setSex(addEmployeeDTO.getSex());
-        employee.setCivilStatus(addEmployeeDTO.getCivilStatus());
-        employee.setPosition(addEmployeeDTO.getPosition());
-        employee.setEmpEmailAddress(addEmployeeDTO.getEmpEmailAddress());
-        employee.setCellNo(addEmployeeDTO.getCellNo());
-        Company company=companyServiceRepo.findCompanyByName ( addEmployeeDTO.getCompanyName ( ) );
+        employee.setFirstName ( addEmployeeDTO.getFirstName ( ) );
+        employee.setLastName ( addEmployeeDTO.getLastName ( ) );
+        employee.setMiddleName ( addEmployeeDTO.getMiddleName ( ) );
+        employee.setAddress ( addEmployeeDTO.getAddress ( ) );
+        employee.setBirthdate ( addEmployeeDTO.getBirthdate ( ) );
+        employee.setBirthplace ( addEmployeeDTO.getBirthplace ( ) );
+        employee.setAge ( addEmployeeDTO.getAge ( ) );
+        employee.setSex ( addEmployeeDTO.getSex ( ) );
+        employee.setCivilStatus ( addEmployeeDTO.getCivilStatus ( ) );
+        employee.setPosition ( addEmployeeDTO.getPosition ( ) );
+        employee.setEmpEmailAddress ( addEmployeeDTO.getEmpEmailAddress ( ) );
+        employee.setCellNo ( addEmployeeDTO.getCellNo ( ) );
+        Company company = companyServiceRepo.findCompanyByName ( addEmployeeDTO.getCompanyName ( ) );
         company.setName ( addEmployeeDTO.getCompanyName ( ) );
         employee.setCompany ( company );
         employee.setEmpPhoto ( addEmployeeDTO.getEmpPhoto ( ) );
-        employeeServiceRepo.save(employee);
-        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"Employee Added/Updated Successfully!!",employee ) );
+        employeeServiceRepo.save ( employee );
+        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true , HttpStatus.OK , "Employee Added/Updated Successfully!!" , employee ) );
     }
 
 }

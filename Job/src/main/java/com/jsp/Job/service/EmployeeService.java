@@ -14,4 +14,6 @@ public interface EmployeeService {
     ResponseEntity< ResponseDTO> updateEmployee ( AddEmployeeDTO addEmployeeDTO );
 
     ResponseEntity< ResponseDTO> deleteEmployee ( String empId );
+
+    ResponseEntity< ResponseDTO> deleteAllEmployees ( );
 }

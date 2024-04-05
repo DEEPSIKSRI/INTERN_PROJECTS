@@ -26,4 +26,8 @@ public interface EmployeeApi {
     @PreAuthorize ( "hasAnyRole('ADMIN')" )
     @DeleteMapping("/deleteEmployee/{empId}")
     ResponseEntity<ResponseDTO> deleteEmployee(@PathVariable String empId);
+
+    @PreAuthorize ( "hasAnyRole('ADMIN')" )
+    @DeleteMapping("/deleteAllemployees")
+    ResponseEntity<ResponseDTO> deleteAllEmployees();
 }

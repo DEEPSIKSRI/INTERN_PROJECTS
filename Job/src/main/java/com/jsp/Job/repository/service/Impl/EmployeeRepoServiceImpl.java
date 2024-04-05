@@ -39,4 +39,9 @@ public class EmployeeRepoServiceImpl implements EmployeeServiceRepo {
     public void deleteById ( String empId ) {
         employeeRepository.deleteById ( empId );
     }
+
+    @Override
+    public void deleteAll ( ) {
+        employeeRepository.deleteAll ();
+    }
 }
