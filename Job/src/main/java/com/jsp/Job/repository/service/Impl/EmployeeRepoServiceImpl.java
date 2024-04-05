@@ -27,11 +27,16 @@ public class EmployeeRepoServiceImpl implements EmployeeServiceRepo {
 
     @Override
     public void save ( Employee employee ) {
-         employeeRepository.save ( employee );
+        employeeRepository.save ( employee );
     }
 
     @Override
     public Optional < Employee > findById ( String employeeId ) {
         return employeeRepository.findById ( employeeId );
+    }
+
+    @Override
+    public void deleteById ( String empId ) {
+        employeeRepository.deleteById ( empId );
     }
 }

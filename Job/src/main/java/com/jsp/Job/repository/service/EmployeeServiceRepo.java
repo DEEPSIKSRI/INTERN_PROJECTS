@@ -13,4 +13,6 @@ public interface EmployeeServiceRepo {
     void save ( Employee employee );
 
     Optional < Employee > findById ( String employeeId );
+
+    void deleteById ( String empId );
 }

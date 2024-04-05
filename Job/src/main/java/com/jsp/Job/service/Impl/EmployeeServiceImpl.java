@@ -5,9 +5,12 @@ import com.jsp.Job.dto.EmployeeDetailsDTO;
 import com.jsp.Job.dto.ResponseDTO;
 import com.jsp.Job.entity.Company;
 import com.jsp.Job.entity.Employee;
+import com.jsp.Job.repository.EmployeeRepository;
+import com.jsp.Job.repository.service.CompanyServiceRep;
 import com.jsp.Job.repository.service.EmployeeServiceRepo;
 import com.jsp.Job.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,13 +22,17 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
+    @Value("${projects}")
+    private String jobName;
+
     private final EmployeeServiceRepo employeeServiceRepo;
+    private final CompanyServiceRep companyServiceRepo;
 
     @Override
     public ResponseEntity < ResponseDTO > listOfAllEmployees ( ) {
         List <Employee> employee=employeeServiceRepo.findAll();
         List< EmployeeDetailsDTO > employeeDetailsDTOS=employee.stream( ).map (
-                employee1 -> {
+                employee1-> {
                   EmployeeDetailsDTO employeeDetailsDTO=new EmployeeDetailsDTO ();
                   employeeDetailsDTO.setEmployeeId ( employee1.getEmployeeId ( ) );
                   employeeDetailsDTO.setFirstName ( employee1.getFirstName ( ) );
@@ -37,26 +44,30 @@ public class EmployeeServiceImpl implements EmployeeService {
                   return employeeDetailsDTO;
                 }
         ).toList ();
-
+        System.out.println (jobName +"------->JobName");
         return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"List of Employee Details!!",employeeDetailsDTOS ) );
     }
 
     @Override
     public ResponseEntity < ResponseDTO > saveEmployee ( AddEmployeeDTO addEmployeeDTO ) {
-        if(employeeServiceRepo.existsEmployeesByEmpEmailAddress ( addEmployeeDTO.getEmpEmailAddress ( ) ))
-        {
-            return ResponseEntity.status ( HttpStatus.BAD_REQUEST ).body ( new ResponseDTO ( false,HttpStatus.BAD_REQUEST,"Employee Already Exists!!","" ) );
+        if ( employeeServiceRepo.existsEmployeesByEmpEmailAddress ( addEmployeeDTO.getEmpEmailAddress ( ) ) ) {
+            return ResponseEntity.status ( HttpStatus.BAD_REQUEST ).body ( new ResponseDTO ( false , HttpStatus.BAD_REQUEST , "Employee Already Exists!!" , "" ) );
         }
-        Employee employee = new Employee();
-        employee.setEmployeeId ( employee.getEmployeeId ( ) );
-        return getResponseDTOResponseEntity ( addEmployeeDTO , employee );
-            }
-
+        Employee employee = new Employee ( );
+        employee.setEmployeeId ( addEmployeeDTO.getEmployeeId ( ) );
+        return getResponseDTOResponseEntity ( addEmployeeDTO,employee );
+    }
     @Override
     public ResponseEntity<ResponseDTO> updateEmployee(AddEmployeeDTO addEmployeeDTO)
     {
         Employee employee=employeeServiceRepo.findById(addEmployeeDTO.getEmployeeId ()).get ();
         return getResponseDTOResponseEntity ( addEmployeeDTO , employee );
+    }
+
+    @Override
+    public ResponseEntity < ResponseDTO > deleteEmployee ( String empId ) {
+        employeeServiceRepo.deleteById(empId);
+        return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"Employee Deleted Successfully!!","" ) );
     }
 
     private ResponseEntity < ResponseDTO > getResponseDTOResponseEntity ( AddEmployeeDTO addEmployeeDTO , Employee employee ) {
@@ -72,9 +83,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setPosition(addEmployeeDTO.getPosition());
         employee.setEmpEmailAddress(addEmployeeDTO.getEmpEmailAddress());
         employee.setCellNo(addEmployeeDTO.getCellNo());
-        Company company=new Company ();
+        Company company=companyServiceRepo.findCompanyByName ( addEmployeeDTO.getCompanyName ( ) );
         company.setName ( addEmployeeDTO.getCompanyName ( ) );
-        employee.setCompany (company);
+        employee.setCompany ( company );
         employee.setEmpPhoto ( addEmployeeDTO.getEmpPhoto ( ) );
         employeeServiceRepo.save(employee);
         return ResponseEntity.status ( HttpStatus.OK ).body ( new ResponseDTO ( true,HttpStatus.OK,"Employee Added/Updated Successfully!!",employee ) );
