@@ -7,11 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class JobApplication {
 
-	@Value("${name}")
-	private String myName;
+//	@Value("${userName}")
+//	private String myName;
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(JobApplication.class, args);
 	}
+
 }
